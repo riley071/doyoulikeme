@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do You Like Me? 😳💗</title>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #ff9ecb, #ffc8dd);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Poppins", sans-serif;
+        overflow: hidden;
+        user-select: none;
+    }
+
+    #container {
+        text-align: center;
+        animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+        color: #fff;
+        font-size: 38px;
+        margin-bottom: 40px;
+        text-shadow: 0 0 10px #ff4d88;
+    }
+
+    button {
+        padding: 15px 35px;
+        font-size: 22px;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        margin: 20px;
+        transition: 0.25s;
+    }
+
+    #yesBtn {
+        background: #ff4d88;
+        color: white;
+        box-shadow: 0 0 15px #ff4d8888;
+    }
+
+    #noBtn {
+        background: #fff;
+        color: #ff4d88;
+        box-shadow: 0 0 15px #fff;
+        position: absolute;
+    }
+
+    /* Floating hearts animation */
+    .heart {
+        position: fixed;
+        font-size: 25px;
+        animation: floatUp 2s linear forwards;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-150px) scale(1.8); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+</style>
+</head>
+<body>
+
+<div id="container">
+    <h1 id="question">Do you like me? 😳💗</h1>
+    <button id="yesBtn">YES</button>
+    <button id="noBtn">NO</button>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const question = document.getElementById("question");
+
+    let dodges = 0;
+
+    // Make NO button dodge the cursor creatively
+    noBtn.onmouseover = () => {
+        dodges++;
+
+        // Move to random position
+        noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+        noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
+
+        // Shake effect
+        noBtn.style.transform = `rotate(${Math.random()*30-15}deg)`;
+
+        // Shrink the NO button each time
+        let newSize = 22 - dodges;
+        if (newSize < 5) newSize = 5;
+        noBtn.style.fontSize = newSize + "px";
+
+        // Grow YES button
+        yesBtn.style.transform = `scale(${1 + dodges*0.05})`;
+
+        // Change question dynamically
+        const messages = [
+            "Why you trying to press NO? 😳",
+            "Heyyyy stop chasing NO 😭",
+            "NO doesn't want you 💀",
+            "Just press YES already 😤💗",
+            "You're stressing NO 😭",
+            "At this point you're choosing YES 😌"
+        ];
+        question.textContent = messages[Math.min(dodges, messages.length - 1)];
+    };
+
+    // YES button clicked
+    yesBtn.onclick = () => {
+        question.textContent = "Yaaay! I like you too 😳💗";
+        yesBtn.style.transform = "scale(1.4)";
+        noBtn.style.display = "none";
+
+        // heart explosion
+        for (let i = 0; i < 20; i++) {
+            createHeart();
+        }
+    };
+
+    // Floating hearts
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💗";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 2000);
+    }
+</script>
+
+</body>
+</html>
